@@ -1,0 +1,27 @@
+version: "3.9"
+services:
+  mysql:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: mysql
+    restart: always
+    ports:
+      - 23306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: "password123"
+      MYSQL_DATABASE: "test-BBDD"
+      MYSQL_USER: "devusr"
+      MYSQL_PASSWORD: "devpwd"
+    volumes:
+      - ./schemas:/var/lib/mysql:rw
+    networks:
+      mysql_network:
+        aliases:
+          - mysql_host
+volumes:
+  schemas: {}
+networks:
+  mysql_network:
+    name: mysql_net
+    driver: bridge
